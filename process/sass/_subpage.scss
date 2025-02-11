@@ -1,0 +1,118 @@
+/*===============================
+=            subpage            =
+===============================*/
+
+.ssabanner {
+  width: 100%;
+  height: 200px;
+  background-image: url('https://sussex.sharepoint.com/:i:/r/SiteAssets/Images/Announcements/ssa.jpg?csf=1&web=1&e=qg7JB5');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ssaletter {
+    span.ss {
+      color: blue;
+
+      &:before {
+        content: "my ";
+        color: red;
+      }
+    }
+
+    a {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      color: blue;
+      text-decoration: underline;
+    }
+
+    ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------  Health Advocate  ----------*/
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+}
+a {
+  padding: 0;
+  color: black;
+  text-decoration: underline;
+}
+.bold {
+  font-weight: bold;
+}
+
+.flyercontent {
+  position: relative;
+  width: 100%;
+  padding: 0 1.85rem 4rem;
+  text-align: left;
+  background-color: #ececec;
+  background-image: url(https://www.healthadvocate.com/emails/awareness_email/2102019-AlcoholAwareness-1EML_HEAD_V2.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: contain;
+  padding-top: 16.5rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2rem;
+    bottom: 0;
+    left: 0;
+    background-color: #009EE1;
+  }
+
+  #bodyinfo {
+    margin: 3.5rem 0 2rem;
+    padding: 1rem 3rem;
+    background-color: white;
+  }
+
+  #contact {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 1rem 2.5rem;
+
+    #repimg {
+
+    }
+
+    #details {
+      display: flex;
+      align-items: center;
+
+      #icons {
+
+      }
+
+      #content {
+        &>* {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

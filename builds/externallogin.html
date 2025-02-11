@@ -1,0 +1,36 @@
+
+<head>
+  <title>External Login Page</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <script src="/js/script.js" defer="defer"></script>
+  <script>
+    function loginForm() {
+      document.myform.submit();
+      document.myform.action = "http://172.17.29.63/ucdashboard/";
+    }
+    
+  </script>
+</head>
+<body>
+  <div class="main">
+    <div class="row">
+      <div class="columns">
+        <div class="topbar">
+          <ul>
+            <li><a href="/" class="hvrunderline1">Home1</a></li>
+            <li><a href="/delta-newsletter.html">Benefits</a></li>
+            <li><a href="/sandbox.html">Sandbox</a></li>
+            <li><a href="/subpage.html">Page2</a>  </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <form action="http://172.17.29.63/ucdashboard/" name="myform" method="post">
+      <input type="text" id="txtUID" value="ISI" class="txtLoginInput"/>
+      <input type="password" id="txtPassword" value="T3lemanagment" class="txtLoginInput"/>
+      <input type="button" id="cmdLogin" value="Login" class="btn"/>
+    </form>
+  </div>
+</body>

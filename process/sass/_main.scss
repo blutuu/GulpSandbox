@@ -1,0 +1,396 @@
+* {
+  box-sizing: border-box;
+}
+
+.topbar {
+  margin-bottom: 10px;
+  border-bottom: solid 1px;
+
+  ul {
+    list-style-type: none;
+    display: flex;
+
+    >li {
+      margin: 0 10px;
+      transition: .3s;
+
+      &:hover {
+        // background-color: #ddd;
+      }
+
+      a {
+        display: block;
+        padding: 5px;
+        color: black;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.main {
+  width: 50%;
+  min-width: 700px;
+  border: solid 1px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: $white;
+  margin: 10px auto;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+
+  #leftsidebar {
+    width: 236px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.hvrunderline1 {
+
+  &:before,
+  &:after {
+    content: "";
+    width: 0;
+    height: 5px;
+    border-bottom: solid 5px $oe_lightblue;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transition: .3s;
+  }
+
+  &:hover {
+
+
+    &:before {
+      width: 50%;
+      left: 0;
+      transition-delay: .3s;
+    }
+
+    &:after {
+      width: 50%;
+      transition-delay: .3s;
+    }
+
+    & {
+      transform: translateY(-2px);
+      transition: .3s;
+    }
+  }
+}
+
+.message-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 10px auto;
+  padding: 10px 0;
+  box-sizing: border-box;
+  color: black;
+
+  p {
+    margin-top: .5rem;
+    line-height: 1.25rem;
+    font-size: .9rem;
+  }
+}
+
+.tax-calculator {
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px 0;
+  box-sizing: border-box;
+  
+  h3 {
+    margin: 1.5rem 0 0.5rem;
+    padding: 0;
+    font-size: 1.125rem;
+    font-weight: 100;
+  }
+
+  input, select {
+    font-size: 1.125rem;
+    font-weight: 100;
+    padding: 0.45rem 0.5rem;
+
+    &::placeholder {
+      color: black;
+    }
+  }
+
+  select {
+    option {
+      color: #191919;
+    }
+  }
+
+  label {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  #calculate-button {
+    display: block;
+    background-color: #465EA2;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    margin: 2.75rem 0 1.75rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: white;
+
+    &:hover {
+      background-color: #3b4f8c;
+      cursor: pointer;
+    }
+  }
+
+  #result {
+    border-top: 1px solid;
+    padding: 1.75rem 0;
+
+    h4 {
+      font-weight: 500;
+      font-size: 1.25rem;
+    }
+
+    #tax-range {
+      font-size: 3rem;
+      color: #223173;
+      padding: 0.75rem 0.5rem;
+    }
+  }
+
+  #disclaimer {
+    background-color: #EEEEEE;
+    width: 100%;
+    padding: 1rem;
+
+    p {
+      font-style: italic;
+    }
+  }
+
+  .pepicons-pop--info-circle-filled {
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cg fill='none'%3E%3Cdefs%3E%3Cmask id='pepiconsPopInfoCircleFilled0'%3E%3Cpath fill='%23fff' d='M0 0h26v26H0z'/%3E%3Cg fill='%23000'%3E%3Cpath fill-rule='evenodd' d='M13 10a2 2 0 0 1 2 2v7a2 2 0 1 1-4 0v-7a2 2 0 0 1 2-2' clip-rule='evenodd'/%3E%3Cpath d='M15 7a2 2 0 1 1-4 0a2 2 0 0 1 4 0'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Ccircle cx='13' cy='13' r='13' fill='%23757575' mask='url(%23pepiconsPopInfoCircleFilled0)'/%3E%3C/g%3E%3C/svg%3E");
+    margin: -0.1875rem 0.25rem;
+
+    &:hover::after {
+      content: "to find your 2025 assessed value, visit our property record search page (with property search being the link to https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm.";
+      position: absolute;
+      top: -1.5em;
+      right: 0;
+      // transform: translateX(-50%);
+      background-color: #465EA2;
+      color: white;
+      padding: 0.25em 0.5em;
+      border-radius: 3px;
+      font-size: 0.75em;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+  }
+}
+
+.blocklink {
+  width: 47%;
+  min-height: 25px;
+  display: table;
+  position: relative;
+  margin: 10px 0 0;
+  padding: 7px 5px;
+  box-sizing: border-box;
+  border-bottom: solid 2px darken($oe_midblue, 25);
+  background-color: $oe_midblue;
+  color: $white;
+  text-align: center;
+  transition: .3s;
+
+  &:hover {
+    background-color: lighten($oe_midblue, 5);
+// transform: scale(.97);
+  }
+}
+
+a {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  color: $white;
+  text-decoration: none;
+}
+
+>div {
+  display: table-cell;
+// float: left;
+// border: solid 1px black;
+}
+
+.iconbox {
+  width: 30px;
+  vertical-align: middle;
+}
+
+.icontextbox {
+  width: 60px;
+}
+
+#shinstar {
+  position: relative;
+  height: 246px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: $oe_midblue;
+  text-align: center;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    border: solid 118px transparent;
+    border-bottom: solid 25px white;
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+  }
+
+  > div {
+    margin: 10px 0;
+  }
+
+  #recipbox {
+    display: flex;
+    width: fit-content;
+    height: 148px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: .3s;
+  }
+
+  .slideItem.active {
+    ul {
+      animation: scrollup linear 1;
+      animation-duration: 10s;
+    }
+  }
+
+  .recip {
+    width: 216px;
+    margin-right: 10px;
+
+    .starcat {
+      z-index: 1;
+    }
+
+    ul {
+      padding-top: 50%;
+      list-style-type: none;
+      padding-left: 0;
+
+      &.active {
+        
+      }
+
+      li {
+        margin: 10px 0;
+        // color: white;
+      }
+    }
+    
+  }
+
+  .recipname {
+    display: block;
+  }
+
+  .starcat {
+    position: relative;
+  }
+
+  .catribbon {
+    width: 100%;
+    padding: 10px;
+    background-color: $oe_orange;
+    top: 0;
+  }
+
+}
+
+/*=================================
+=            Spotlight            =
+=================================*/
+
+#spotlight {
+  width: 100%;
+  position: relative;
+  // padding: 14px;
+  background-color: $oe_midblue;
+  overflow: hidden;
+
+  h4 {
+    margin: 0px;
+    padding: 0px 5px 10px;
+    color: white;
+    border-bottom: solid 3px white;
+  }
+}
+
+#spotlight_slideshow {
+  margin-top: 35px;
+  padding: 10px 0 20px;
+  // border-radius: 10px;
+  color: white;
+  // background-color: darken($oe_midblue, 7);
+
+  .entryslide {
+    text-align: center;
+
+    .spotlight-img {
+      width: 125px;
+      margin: 10px 30px;
+    }
+    .spotlight-badge {
+      margin-top: 5px;
+      font-weight: bold;
+
+      img {
+        width: 20px;
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .spotlight-wrap {
+    margin: 10px 15px;
+    padding: 10px;
+    background-color: darken($oe_midblue, 7);
+    border-radius: 10px;
+  }
+}
+
+/*=================================
+=            EAP Socials          =
+=================================*/
+
+#eapsocials {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 1rem auto 2rem;
+
+  a {
+    width: auto;
+  }
+}

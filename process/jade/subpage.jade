@@ -1,0 +1,34 @@
+head
+  title Subpage
+  include includes/head.jade
+body
+  .main
+    include includes/topbar.jade
+    
+    div.article
+      div(style="height: 4rem;")
+        img(src="https://www.healthadvocate.com/emails/images/HALogo_203px.png" alt="Health Advocate Logo" style="margin-bottom:.5rem;float:left;")
+        img(src="https://www.healthadvocate.com/emails/eap/2002003-15_YoureInvited_Cyan.png" alt="Health Advocate Logo" style="margin-bottom:.5rem;float:right;")
+
+      div.flyercontent
+        section#bodyinfo 
+          p.bold Understanding why and when you turn to alcohol can be the first step to reducing your drinking habits.
+          p #[span.bold Health Advocate is here to help. ] A Licensed Counselor can help you identify your triggers, learn ways to overcome them and develop healthier coping skills for life’s challenges. It’s totally confidential.
+          a.imgbutton(href="")
+            img(src="https://www.healthadvocate.com/emails/awareness_email/2102019-AlcoholAwareness-1EML_BTN.jpg", alt="")
+
+        section#contact
+          img#repimg(src="https://www.healthadvocate.com/emails/awareness_email/2102019-AlcoholAwareness-1EML_CTA.jpg", alt="contact representative")
+          #details 
+            #icons 
+              img(src="https://image.s7.sfmc-content.com/lib/fe9b13727561007c74/m/2/c7355c44-85b2-474e-bdf3-96c5520ca5b2.png", alt="", style="display:block;text-decoration:none;")
+              a(href="https://play.google.com/store/apps/details?id=com.healthadvocate.ui&hl=en", style="display:inline;") 
+                img(src="https://image.s7.sfmc-content.com/lib/fe9b13727561007c74/m/2/b72f6249-1e7f-4bc4-bdab-bb40ea72bbcd.png", alt="")
+              a(href="https://apps.apple.com/us/app/health-advocate-smarthelp/id561029373", style="display:inline;text-decoration:none;") 
+                img(src="https://image.s7.sfmc-content.com/lib/fe9b13727561007c74/m/2/06be077e-bafc-44c7-b883-d9fa4857ddfc.png", alt="")
+            #content
+              h2 877.240.6863
+              a(href="https://healthadvocate.personaladvantage.com/portal/landing?a=1") Visit Your Member Site
+              span answers@healthadvocate.com
+        
+        //- include includes/eapsocials.jade
