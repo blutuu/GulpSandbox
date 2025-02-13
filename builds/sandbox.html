@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="tax-calculator">
+      <div id="tax-calculator">
         <div class="message-box"> 
           <p>To calculate an estimate of your 2025 annual property taxes, start by selecting the school district where the property is located. Next, enter the 2025 assessed value. Select Calculate to see an estimated range of property tax for the 2025 tax year.</p>
         </div>
@@ -39,7 +39,11 @@
           <option value="Delmar">Delmar</option>
         </select><br>
         <h3>
-          <label for="new-assessed-value"> <strong>New Assessed Value <span class="pepicons-pop--info-circle-filled"></span></strong></label>
+          <label for="new-assessed-value"> <strong>New Assessed Value </strong><span class="pepicons-pop--info-circle-filled"></span>
+            <div class="tooltip">
+              <p>To find your 2025 assessed value, visit our <a href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm.">property record search</a> <span>page</span></p>
+            </div>
+          </label>
         </h3>
         <input id="new-assessed-value" type="number" name="new-assessed-value" min="0" placeholder="Enter value..."><br>
         <input id="calculate-button" type="button" value="Calculate" onclick="calculateTax()">

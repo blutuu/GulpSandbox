@@ -18,7 +18,7 @@ const { series, parallel } = require("gulp"),
   browsersync = require("browser-sync");
 
 // Input sources
-var sources = {
+const sources = {
   sass: "process/sass/style.scss",
   allsass: "process/sass/**/*",
   alljade: "process/jade/**/*",
@@ -27,7 +27,7 @@ var sources = {
 };
 
 // Output destinations
-var output = {
+const output = {
   docroot: "builds",
   css: "builds/css",
   js: "builds/js",
@@ -104,9 +104,9 @@ function htmlProcess() {
 
 // Watching files for changes
 function watch() {
-  gulp.watch(sources.js, ["js"]).on("change", browsersync.reload);
-  gulp.watch([sources.allsass], ["sass"]).on("change", browsersync.reload);
-  gulp.watch([sources.alljade], ["jade"]).on("change", browsersync.reload);
+  gulp.watch(sources.js, javascript).on("change", browsersync.reload);
+  gulp.watch([sources.allsass], styles).on("change", browsersync.reload);
+  gulp.watch("process/jade/**/*", htmlProcess).on("change", browsersync.reload);
 }
 
 // Starting the live server
@@ -117,7 +117,5 @@ function server() {
     },
   });
 }
-
-// gulp.task("default", ["sass", "jade", "watch", "js", "server"]);
 
 exports.default = series(javascript, styles, htmlProcess, server, watch);

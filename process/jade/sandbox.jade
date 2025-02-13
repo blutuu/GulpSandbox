@@ -7,7 +7,7 @@ html(lang="en")
     .main
       include includes/topbar.jade
       
-      .tax-calculator
+      #tax-calculator
         .message-box 
           p To calculate an estimate of your 2025 annual property taxes, start by selecting the school district where the property is located. Next, enter the 2025 assessed value. Select Calculate to see an estimated range of property tax for the 2025 tax year.
         h3
@@ -26,7 +26,12 @@ html(lang="en")
 
         h3
           label(for="new-assessed-value") 
-            strong New Assessed Value #[span(class="pepicons-pop--info-circle-filled")]
+            strong New Assessed Value 
+            span(class="pepicons-pop--info-circle-filled")
+            div(class="tooltip")
+              p To find your 2025 assessed value, visit our #[a(href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm.") property record search] #[span page]
+              
+
         input#new-assessed-value(type="number" name="new-assessed-value" min="0" placeholder="Enter value...")
         br
         input(id="calculate-button" type="button" value="Calculate" onclick="calculateTax()")
