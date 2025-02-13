@@ -2,7 +2,8 @@
 =            Variable Initialization            =
 ===============================================*/
 // Dependencies
-var gulp = require("gulp"),
+const { series, parallel } = require("gulp"),
+  gulp = require("gulp"),
   sass = require("gulp-sass")(require("sass")),
   jade = require("gulp-jade"),
   jshint = require("gulp-jshint"),
@@ -33,7 +34,7 @@ var output = {
 };
 
 // Compiling JS
-gulp.task("js", function () {
+function javascript() {
   return gulp
     .src(sources.js)
 
@@ -53,10 +54,10 @@ gulp.task("js", function () {
     .pipe(concat("script.js"))
     .pipe(uglify())
     .pipe(gulp.dest(output.js));
-});
+}
 
-// Compiling Sass
-gulp.task("sass", function () {
+// // Compiling Sass
+function styles() {
   return (
     gulp
       .src(sources.sass)
@@ -79,10 +80,10 @@ gulp.task("sass", function () {
       .pipe(sourcemaps.write())
       .pipe(gulp.dest(output.css))
   );
-});
+}
 
 // Compiling Jade
-gulp.task("jade", function () {
+function htmlProcess() {
   return gulp
     .src(sources.jade)
 
@@ -99,22 +100,24 @@ gulp.task("jade", function () {
 
     .pipe(jade({ pretty: true }))
     .pipe(gulp.dest(output.docroot));
-});
+}
 
 // Watching files for changes
-gulp.task("watch", function () {
+function watch() {
   gulp.watch(sources.js, ["js"]).on("change", browsersync.reload);
   gulp.watch([sources.allsass], ["sass"]).on("change", browsersync.reload);
   gulp.watch([sources.alljade], ["jade"]).on("change", browsersync.reload);
-});
+}
 
 // Starting the live server
-gulp.task("server", function () {
+function server() {
   browsersync.init({
     server: {
       baseDir: output.docroot,
     },
   });
-});
+}
 
-gulp.task("default", ["sass", "jade", "watch", "js", "server"]);
+// gulp.task("default", ["sass", "jade", "watch", "js", "server"]);
+
+exports.default = series(javascript, styles, htmlProcess, server, watch);
