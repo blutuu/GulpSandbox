@@ -39,6 +39,7 @@ let baseRate;
 let tenthRate;
 
 const calculateTax = () => {
+  console.log("Calculating tax...");
   // Get the form value
   const newAssessedValue = parseFloat(
     document.getElementById("new-assessed-value").value

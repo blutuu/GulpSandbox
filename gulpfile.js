@@ -56,7 +56,7 @@ function javascript() {
     .pipe(gulp.dest(output.js));
 }
 
-// // Compiling Sass
+// Compiling Sass
 function styles() {
   return (
     gulp
@@ -102,20 +102,17 @@ function htmlProcess() {
     .pipe(gulp.dest(output.docroot));
 }
 
-// Watching files for changes
-function watch() {
-  gulp.watch(sources.js, javascript).on("change", browsersync.reload);
-  gulp.watch([sources.allsass], styles).on("change", browsersync.reload);
-  gulp.watch("process/jade/**/*", htmlProcess).on("change", browsersync.reload);
-}
-
-// Starting the live server
+// Starting the live server and watching file changes
 function server() {
   browsersync.init({
     server: {
       baseDir: output.docroot,
     },
   });
+
+  gulp.watch("process/js/**/*", javascript).on("change", browsersync.reload);
+  gulp.watch([sources.allsass], styles).on("change", browsersync.reload);
+  gulp.watch("process/jade/**/*", htmlProcess).on("change", browsersync.reload);
 }
 
-exports.default = series(javascript, styles, htmlProcess, server, watch);
+exports.default = series(javascript, styles, htmlProcess, server);
