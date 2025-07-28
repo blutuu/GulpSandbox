@@ -1,75 +1,31 @@
-const districtList = [
-  {
-    district: "Indian River",
-    base: 0.2051,
-    tenth: 0.2256,
-  },
-  {
-    district: "Laurel",
-    base: 0.3189,
-    tenth: 0.3508,
-  },
-  {
-    district: "Seaford",
-    base: 0.3226,
-    tenth: 0.3549,
-  },
-  {
-    district: "Milford",
-    base: 0.292,
-    tenth: 0.3212,
-  },
-  {
-    district: "Woodbridge",
-    base: 0.3825,
-    tenth: 0.4208,
-  },
-  {
-    district: "Cape Henlopen",
-    base: 0.2111,
-    tenth: 0.2322,
-  },
-  {
-    district: "Delmar",
-    base: 0.3141,
-    tenth: 0.3455,
-  },
-];
-let baseRate;
-let tenthRate;
+console.time("excel-processing");
+const XLSX = require("xlsx");
+const fs = require("fs");
 
-const calculateTax = () => {
-  console.log("Calculating tax...");
-  // Get the form value
-  const newAssessedValue = parseFloat(
-    document.getElementById("new-assessed-value").value
-  );
-  const selectedDistrict = document.getElementById("school-district").value;
+// Path to your Excel file
+const workbook = XLSX.readFile(
+  "process/resources/2024 Data for Calculator.xlsx"
+);
 
-  console.log(selectedDistrict);
+// Get the first sheet name
+const sheetName = workbook.SheetNames[0];
 
-  const district = districtList.find((d) => d.district === selectedDistrict);
-  if (district) {
-    baseRate = district.base / 100;
-    tenthRate = district.tenth / 100;
+// Get the worksheet
+const worksheet = workbook.Sheets[sheetName];
 
-    console.log(`Base Rate: ${baseRate}, Tenth Rate: ${tenthRate}`);
-  } else {
-    console.error("District not found");
+// Convert to JSON
+const data = XLSX.utils.sheet_to_json(worksheet);
+
+let blob = new Blob([JSON.stringify(data)]);
+// let link = document.createElement("a");
+
+//link.href = URL.createObjectURL(blob);
+
+fs.writeFile("output.json", JSON.stringify(data), function (err) {
+  if (err) {
+    return console.log(err);
   }
+  console.log("The file was saved!");
+});
 
-  // Calculate the tax (assuming a tax rate of 10% for this example)
-  const calculatedTaxRange = `${(newAssessedValue * baseRate).toFixed(2)} - ${(
-    newAssessedValue * tenthRate
-  ).toFixed(2)}`;
-
-  console.log(numberWithCommas(calculatedTaxRange));
-
-  // Return the calculated value into the tax-range element
-  document.getElementById("tax-range").innerText =
-    numberWithCommas(calculatedTaxRange);
-};
-
-const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
+console.timeEnd("excel-processing");
