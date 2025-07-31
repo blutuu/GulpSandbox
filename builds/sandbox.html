@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <title>Subpage</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <script src="/js/script.js" defer></script>
   </head>
   <body>
@@ -16,9 +16,103 @@
               <li><a href="/" class="hvrunderline1">Home1</a></li>
               <li><a href="/delta-newsletter.html">Benefits</a></li>
               <li><a href="/sandbox.html">Sandbox</a></li>
-              <li><a href="/subpage.html">Page2</a>  </li>
+              <li><a href="/subpage.html">Page2</a></li>
             </ul>
           </div>
+        </div>
+      </div>
+      <div id="tax-calculator">
+        <div class="message-box">
+          <p>
+            To calculate an estimate of your 2025 annual property taxes, start
+            by selecting the school district where the property is located.
+            Next, enter the 2025 assessed value. Select Calculate to see an
+            estimated range of property tax for the 2025 tax year.
+          </p>
+        </div>
+        <h3>
+          <label for="school-district"><strong>School District</strong></label>
+        </h3>
+        <select id="school-district" name="school-district">
+          <option value="" selected disabled hidden>Please select...</option>
+          <option value="Indian River">Indian River</option>
+          <option value="Laurel">Laurel</option>
+          <option value="Seaford">Seaford</option>
+          <option value="Milford">Milford</option>
+          <option value="Woodbridge">Woodbridge</option>
+          <option value="Cape Henlopen">Cape Henlopen</option>
+          <option value="Delmar">Delmar</option></select
+        ><br />
+        <h3>
+          <label for="new-assessed-value">
+            <strong>New Assessed Value </strong
+            ><span class="pepicons-pop--info-circle-filled"></span>
+            <div class="tooltip">
+              <p>
+                To find your 2025 assessed value, visit our
+                <a
+                  href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm"
+                  >property record search</a
+                >
+                <span>page</span>
+              </p>
+            </div>
+          </label>
+        </h3>
+        <input
+          id="new-assessed-value"
+          type="number"
+          name="new-assessed-value"
+          min="0"
+          placeholder="Enter value..."
+        /><br />
+        <input
+          id="calculate-button"
+          type="button"
+          value="Calculate"
+          onclick="calculateTax()"
+        />
+        <div id="result" style="display: flex; gap: 6rem">
+          <!-- First column: header and value-->
+          <div class="result-col">
+            <h4>
+              <label for="tax-range">2025 Estimated Property Tax Range:</label>
+            </h4>
+            <h1 id="tax-range">$0.00 - $0.00</h1>
+          </div>
+          <!-- Second column: header and value-->
+          <div class="result-col">
+            <h4>
+              <label for="tax-rate">2025 Property Tax Amount:</label>
+            </h4>
+            <h1 id="tax-rate">$0.00</h1>
+          </div>
+        </div>
+        <div id="disclaimer">
+          <strong
+            style="
+              color: red;
+              font-weight: bold;
+              font-size: 1.125rem;
+              display: inline;
+            "
+            >This is an estimate only.</strong
+          >
+          <p style="display: inline">
+            This amount does not consider any tax assistance programs you are
+            currently receiving.
+          </p>
+          <p>
+            The estimate does not include tax-assessed services such as roads,
+            streetlights, sewer assessments, tax ditches, or any other
+            applicable fees.
+          </p>
+          <p>
+            Amounts are subject to change based on factors such as assessment
+            appeals, legislation that changes taxable assessed values, and
+            referendums or subsequent votes to increase tax revenue that affect
+            the 2025 tax rate.
+          </p>
         </div>
       </div>
       <div class="container">

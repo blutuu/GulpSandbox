@@ -14,9 +14,9 @@
       margin: 0 10px;
       transition: .3s;
 
-      &:hover {
-        // background-color: #ddd;
-      }
+      // &:hover {
+      //   // background-color: #ddd;
+      // }
 
       a {
         display: block;
@@ -159,6 +159,11 @@
     }
 
     #tax-range {
+      font-size: 3rem;
+      color: #223173;
+      padding: 0.75rem 0.5rem;
+    }
+    #tax-rate {
       font-size: 3rem;
       color: #223173;
       padding: 0.75rem 0.5rem;

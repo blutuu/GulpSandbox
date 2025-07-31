@@ -7,4 +7,48 @@ html(lang="en")
     .main
       include includes/topbar.jade
       
-       
+      #tax-calculator
+        .message-box 
+          p To calculate an estimate of your 2025 annual property taxes, start by selecting the school district where the property is located. Next, enter the 2025 assessed value. Select Calculate to see an estimated range of property tax for the 2025 tax year.
+        h3
+          label(for="school-district")
+            strong School District
+        select#school-district(name="school-district")
+          option(value="" selected disabled hidden) Please select...
+          option(value="Indian River") Indian River
+          option(value="Laurel") Laurel
+          option(value="Seaford") Seaford
+          option(value="Milford") Milford
+          option(value="Woodbridge") Woodbridge
+          option(value="Cape Henlopen") Cape Henlopen
+          option(value="Delmar") Delmar
+        br
+        h3
+          label(for="new-assessed-value") 
+            strong New Assessed Value 
+            span(class="pepicons-pop--info-circle-filled")
+            div(class="tooltip")
+              p To find your 2025 assessed value, visit our #[a(href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm") property record search] #[span page]
+              
+
+        input#new-assessed-value(type="number" name="new-assessed-value" min="0" placeholder="Enter value...")
+        br
+        input(id="calculate-button" type="button" value="Calculate" onclick="calculateTax()")
+
+        div#result(style="display: flex; gap: 6rem;")
+          // First column: header and value
+          .result-col
+            h4
+              label(for="tax-range") 2025 Estimated Property Tax Range:
+            h1#tax-range $0.00 - $0.00
+          // Second column: header and value
+          .result-col
+            h4
+              label(for="tax-rate") 2025 Property Tax Amount:
+            h1#tax-rate $0.00
+        
+        #disclaimer
+          strong(style="color: red; font-weight: bold; font-size: 1.125rem; display: inline;") This is an estimate only.
+          p(style="display: inline;") This amount does not consider any tax assistance programs you are currently receiving. 
+          p The estimate does not include tax-assessed services such as roads, streetlights, sewer assessments, tax ditches, or any other applicable fees.
+          p Amounts are subject to change based on factors such as assessment appeals, legislation that changes taxable assessed values, and referendums or subsequent votes to increase tax revenue that affect the 2025 tax rate.
