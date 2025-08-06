@@ -21,14 +21,87 @@
           </div>
         </div>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h1>Subpage</h1>
-            <p>This is a subpage of the main application.</p>
-            <p>You can add more content here as needed.</p>
+      <div id="loadingOverlay" style="display: none;">
+        <div id="loadingSpinner"> </div>
+        <p>Loading...</p>
+      </div>
+      <label for="parcel-number">Parcel Number:</label>
+      <input id="parcel-number" type="text" name="parcelNumber" placeholder="Enter Parcel Number">
+      <button type="submit" onclick="lookupParcel()" id="search-button">Calculate </button><small id="lookup-error" style="color: red; margin-left: .5rem">Couldn't find property</small><small style="display: block; font-style: italic; margin-top: 0.5rem">Please visit our website at  <a href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm" style="display: inline;">www.sussexcountyde.gov/property reassessment </a> for information on locating your parcel identification number.</small>
+      <div class="results"> 
+        <div id="rates">
+          <div style="margin-bottom: 0.9rem;">
+            <label for="2024-tax-bill">2024 Tax Bill:</label><span id="2024-tax-bill">$0.00</span>
+          </div>
+          <div> 
+            <label for="2025-tax-bill">2025 Tax Bill:</label><span id="2025-tax-bill">$0.00</span>
+          </div>
+          <hr>
+          <div>
+            <label for="tax-difference">Difference in Tax Bills:</label><span id="tax-difference">($0.00)</span>
           </div>
         </div>
+        <div id="changes"> 
+          <div style="margin-bottom: 0.9rem;">
+            <label for="school-tax-changes">Changes in School Taxes:</label><span id="school-tax-changes">$0.00</span>
+          </div>
+          <div style="margin-bottom: 0.9rem;">
+            <label for="county-tax-changes">Changes in County Taxes:</label><span id="county-tax-changes">$0.00</span>
+          </div>
+          <div>
+            <label for="other-charges">Change in Other Charges:</label><span id="other-charges">$0.00</span>
+          </div>
+          <hr>
+          <div>
+            <label for="cumulative-changes">Cumulative Changes:</label><span id="cumulative-changes">($0.00)</span>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <hr style="height: 1.35rem; background: #1C3481;margin: 0;">
+        <p>In a year of reassessment, a property's tax bill could be affected by a change in the property's assessed value and/or the tax rates set by the schools or county. In a year where there is no reassessment, a property's tax bill is only impacted by the tax rate. Because this is a year of reassessment, the breakdown below shows how the  reassessment process and/or the tax rates affected your 2025 tax bill.						</p>
+        <table id="breakdown">
+          <tr>
+            <td>
+              <p>Here is how your property was affected by the reassessment:</p>
+            </td>
+            <td>
+              <p id="reassessment-impact"></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>This property's assessment affected your bill approximately this much (in other words if the tax rate was revenue neutral, this property's tax bill would change by this much only):</p>
+            </td>
+            <td>
+              <p id="reassessment-approx"> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>This property's change in tax rates affected your bill approximately this much (in other words if there was no reassessment, your bill would have changed this much):</p>
+            </td>
+            <td>
+              <p id="tax-rate-approx"></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Changes in tax rate was due to:</p>
+            </td>
+            <td>
+              <p id="tax-rate-impact"></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>The change in your tax bill as a result of both reassessment and tax rate changes was approximately (this does not include changes in other charges):</p>
+            </td>
+            <td>
+              <p id="combined-change"> </p>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </body>

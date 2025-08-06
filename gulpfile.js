@@ -35,25 +35,27 @@ const output = {
 
 // Compiling JS
 function javascript() {
-  return gulp
-    .src(sources.js)
+  return (
+    gulp
+      .src(sources.js)
 
-    .pipe(
-      plumber({
-        errorHandler: function (err) {
-          notify.onError({
-            title: "Gulp error in " + err.plugin,
-            message: err.toString(),
-          })(err);
-        },
-      })
-    )
+      .pipe(
+        plumber({
+          errorHandler: function (err) {
+            notify.onError({
+              title: "Gulp error in " + err.plugin,
+              message: err.toString(),
+            })(err);
+          },
+        })
+      )
 
-    .pipe(jshint("./.jshintrc"))
-    .pipe(jshint.reporter("jshint-stylish"))
-    .pipe(concat("script.js"))
-    .pipe(uglify())
-    .pipe(gulp.dest(output.js));
+      .pipe(jshint("./.jshintrc"))
+      .pipe(jshint.reporter("jshint-stylish"))
+      .pipe(concat("script.js"))
+      // .pipe(uglify())
+      .pipe(gulp.dest(output.js))
+  );
 }
 
 // Compiling Sass

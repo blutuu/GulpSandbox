@@ -6,5 +6,68 @@ html(lang="en")
   body
     .main
       include includes/topbar.jade
-      
+      include includes/loader.jade
+      label(for="parcel-number") Parcel Number:
+      input#parcel-number(type="text", name="parcelNumber", placeholder="Enter Parcel Number")
+      button(type="submit" onclick="lookupParcel()" id="search-button") Calculate 
+      small#lookup-error(class="" style="color: red; margin-left: .5rem") Couldn't find property
+      small(style="display: block; font-style: italic; margin-top: 0.5rem") Please visit our website at  #[a(href="https://property.sussexcountyde.gov/PT/forms/htmlframe.aspx?mode=content/home.htm" style="display: inline;") www.sussexcountyde.gov/property reassessment ] #[ for information on locating your parcel identification number.]
        
+      .results 
+        #rates
+          div(style="margin-bottom: 0.9rem;")
+            label(for="2024-tax-bill") 2024 Tax Bill:
+            span#2024-tax-bill $0.00
+          div 
+            label(for="2025-tax-bill") 2025 Tax Bill:
+            span#2025-tax-bill $0.00
+          hr
+          div
+            label(for="tax-difference") Difference in Tax Bills:
+            span#tax-difference ($0.00)
+
+        #changes 
+          div(style="margin-bottom: 0.9rem;")
+            label(for="school-tax-changes") Changes in School Taxes:
+            span#school-tax-changes $0.00
+          div(style="margin-bottom: 0.9rem;")
+            label(for="county-tax-changes") Changes in County Taxes:
+            span#county-tax-changes $0.00
+          div
+            label(for="other-charges") Change in Other Charges:
+            span#other-charges $0.00
+          hr
+          div
+            label(for="cumulative-changes") Cumulative Changes:
+            span#cumulative-changes ($0.00)
+  
+      .notes
+        hr(style="height: 1.35rem; background: #1C3481;margin: 0;")
+        p In a year of reassessment, a property's tax bill could be affected by a change in the property's assessed value and/or the tax rates set by the schools or county. In a year where there is no reassessment, a property's tax bill is only impacted by the tax rate. Because this is a year of reassessment, the breakdown below shows how the  reassessment process and/or the tax rates affected your 2025 tax bill.						
+
+        table#breakdown
+          tr
+            td
+              p Here is how your property was affected by the reassessment:
+            td
+              p#reassessment-impact
+          tr
+            td
+              p This property's assessment affected your bill approximately this much (in other words if the tax rate was revenue neutral, this property's tax bill would change by this much only):
+            td
+              p#reassessment-approx 
+          tr
+            td
+              p This property's change in tax rates affected your bill approximately this much (in other words if there was no reassessment, your bill would have changed this much):
+            td
+              p#tax-rate-approx
+          tr
+            td
+              p Changes in tax rate was due to:
+            td
+              p#tax-rate-impact
+          tr
+            td
+              p The change in your tax bill as a result of both reassessment and tax rate changes was approximately (this does not include changes in other charges):
+            td
+              p#combined-change 

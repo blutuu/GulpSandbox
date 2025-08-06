@@ -1,0 +1,92 @@
+.main {
+  margin: 0 auto;
+
+  .results {
+    margin: 1.5rem auto 0.75rem;
+    padding: 20px;
+    background-color: #ececec;
+
+    hr {
+      margin: 0 0;
+
+    }
+
+    #rates {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+
+      label {
+        align-self: start;
+        display: inline;
+      }
+      span {
+        float: right;
+        margin-right: 4rem;
+      }
+
+    }
+
+    #changes {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+
+      label {
+        align-self: start;
+        display: inline;
+      }
+      span {
+        float: right;
+        margin-right: 4rem;
+      }
+
+    }
+
+  }
+
+  .notes {
+    #breakdown {
+      border-spacing: 0;
+      
+      td {
+        width: 50%;
+        border: solid 1px;
+        margin: 0;
+        padding: 0.25rem;
+      }
+
+      tr > td:first-child {
+        font-weight: 500;
+      }
+      tr > td:nth-child(2) {
+        text-align: center;
+        font-weight: 500;
+      }
+      #reassessment-impact,
+      #tax-rate-impact {
+        font-weight: 300;
+        font-style: italic; 
+      }
+    }
+  }
+
+  #lookup-error {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 3s;
+    
+    &.closeError {
+      opacity: 0;
+      // transition: none;
+      // transition-delay: 3s;
+    }
+    &.showError {
+      opacity: 1;
+      transition: opacity 0.3s ease-in-out;
+      transition-delay: 0s;
+    }
+  }
+}

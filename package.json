@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
+    "start": "npx nodemon --exec babel-node node/server.js"
   },
   "resolutions": {
     "graceful-fs": "^4.2.4"
@@ -13,6 +14,10 @@
   "author": "Marlin Blue",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "browser-sync": "^2.26.12",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^7.0.1",
@@ -27,15 +32,18 @@
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
     "jshint": "^2.12.0",
-    "jshint-stylish": "^2.2.1"
+    "jshint-stylish": "^2.2.1",
+    "nodemon": "^3.1.10"
   },
   "browserslist": [
     "last 2 version",
     "> 2%"
   ],
   "dependencies": {
+    "csvtojson": "^2.0.10",
+    "express": "^5.1.0",
     "gulp-sass": "^6.0.0",
     "sass": "^1.84.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

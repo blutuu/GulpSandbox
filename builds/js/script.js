@@ -1,1 +1,338 @@
-console.time("excel-processing");let XLSX=require("xlsx"),fs=require("fs"),workbook=XLSX.readFile("process/resources/2024 Data for Calculator.xlsx"),sheetName=workbook.SheetNames[0],worksheet=workbook.Sheets[sheetName],data=XLSX.utils.sheet_to_json(worksheet),blob=new Blob([JSON.stringify(data)]);fs.writeFile("output.json",JSON.stringify(data),function(e){if(e)return console.log(e);console.log("The file was saved!")}),console.timeEnd("excel-processing");var translationAmount1,slideVehicleSize1,currentSlideList1,slideIndex1,slideDuration1,firstSlideIndex1,lastSlideIndex1,firstSlidePosition1,lastSlidePosition1,slideVehicle1=document.querySelector("#spotlight_slideshow.slideVehicle"),slides1=slideVehicle1.querySelectorAll(".entryslide.slideItem"),firstSlide1=slides1[0],lastSlide1=slides1[slides1.length-1],slideWidth1=235,increment1=0,anewNode=document.createElement("div"),anewNode2=document.createElement("div"),nextButton1=(anewNode.classList.add("arrow"),anewNode.classList.add("prev"),anewNode2.classList.add("arrow"),anewNode2.classList.add("next"),slideVehicle1.insertAdjacentElement("beforebegin",anewNode),slideVehicle1.insertAdjacentElement("beforebegin",anewNode2),document.querySelector("#spotlight .arrow.next")),prevButton1=document.querySelector("#spotlight .arrow.prev");function init1(){increment1-=translationAmount1,toggleActiveState1(slides1[slideIndex1=0]),setTranslation1(increment1),enableArrowButtons1()}function nextSlide1(){slideIndex1++,setTranslation1(increment1-=translationAmount1),checkSlidePosition1()}function previousSlide1(){slideIndex1--,setTranslation1(increment1+=translationAmount1),checkSlidePosition1()}function autoNext1(e){(currentSlideList1=e.querySelector("ul")).addEventListener("webkitAnimationEnd",nextSlide1),currentSlideList1.addEventListener("animationend",nextSlide1),setSlideDuration1(currentSlideList1),console.log("auto slide")}function checkSlidePosition1(){slideIndex1<firstSlideIndex1?(increment1=-1*(lastSlidePosition1-translationAmount1),slideIndex1=slides1.length-1,pauseArrowButtons1(),resetSlideShowMechanisms1()):slideIndex1===lastSlideIndex1&&(increment1=-1*(firstSlidePosition1+translationAmount1),slideIndex1=0,pauseArrowButtons1(),resetSlideShowMechanisms1()),toggleActiveState1(slides1[slideIndex1]),console.log("Current slide: "+slideIndex1)}function pauseArrowButtons1(){nextButton1.removeEventListener("click",nextSlide1),prevButton1.removeEventListener("click",previousSlide1)}function resetSlideShowMechanisms1(){setTimeout(function(){pauseTransitions1(),setTranslation1(increment1),setTimeout(function(){console.log("arrows enabled"),setTransitions1("0.5s"),enableArrowButtons1()},500)},1e3)}function pauseTransitions1(){slideVehicle1.style.transition="0s"}function setTranslation1(e){slideVehicle1.style.transform="translateX("+e+"%)"}function setTransitions1(e){slideVehicle1.style.transition=e}function setWidthIE1(){(0<window.navigator.userAgent.indexOf("MSIE ")||navigator.userAgent.match(/Trident.*rv\:11\./))&&(slideVehicleSize1=slideVehicle1.childElementCount*slideWidth1,slideVehicle1.style.width=slideVehicleSize1+"px",console.log("slide width: "+slideWidth1),console.log("vehicle size: "+slideVehicleSize1))}function setSlideDuration1(e){slideDuration1=e.offsetHeight/28+"s",0<msie||navigator.userAgent.match(/Trident.*rv\:11\./)?(e.parentNode.classList.remove("active"),setTimeout(function(){e.parentNode.classList.add("active"),e.style.animationDuration=slideDuration1},100)):e.style.animationDuration=slideDuration1}function enableArrowButtons1(){nextButton1.addEventListener("click",nextSlide1),prevButton1.addEventListener("click",previousSlide1)}function toggleActiveState1(e){for(var t=0;t<slides1.length;t++)slides1[t].classList.remove("active");e.classList.toggle("active")}function empty1(e){for(;e.firstChild;)e.removeChild(e.firstChild)}function reduceDecimal1(e){return e=(Math.round(100*e)/100).toFixed(2),parseFloat(e)}lastSlide1=lastSlide1.cloneNode(!0),slideVehicle1.insertBefore(lastSlide1,firstSlide1),firstSlide1=firstSlide1.cloneNode(!0),slideVehicle1.appendChild(firstSlide1),translationAmount1=reduceDecimal1(100/(slides1.length+2)),firstSlidePosition1=firstSlideIndex1=0,lastSlidePosition1=translationAmount1*(slideVehicle1.childElementCount-1),lastSlideIndex1=slideVehicle1.childElementCount-2,setWidthIE1(),init1();
+const taxDataPath = "output.json";
+
+let taxData = null;
+let parcel = null;
+let parcelData = null;
+let lookupButton = document.getElementById("search-button");
+let tax24 = document.getElementById("2024-tax-bill");
+let tax25 = document.getElementById("2025-tax-bill");
+let taxDifference = document.getElementById("tax-difference");
+let schoolChange = document.getElementById("school-tax-changes");
+let countyChange = document.getElementById("county-tax-changes");
+let otherCharges = document.getElementById("other-charges");
+let cumulativeChange = document.getElementById("cumulative-changes");
+let reassessmentImpact = document.getElementById("reassessment-impact");
+let reassessmentApprox = document.getElementById("reassessment-approx");
+let taxRateApprox = document.getElementById("tax-rate-approx");
+let taxRateImpact = document.getElementById("tax-rate-impact");
+let combinedChange = document.getElementById("combined-change");
+
+const getTaxData = async () => {
+  let url = "http://localhost:8000/api/gettaxdata";
+
+  await fetch(url)
+    .then((response) => {
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        return response.json();
+      } else {
+        return response.text();
+      }
+    })
+    .then((data) => {
+      taxData = data;
+    })
+    .catch((err) => {
+      console.error("Failed to read tax data:", err);
+    });
+
+  return taxData;
+};
+
+const setTaxData = async () => {
+  if (taxData === null) {
+    taxData = await getTaxData();
+    console.log(taxData);
+    enableSearch();
+    hideLoadingPopup();
+  }
+
+  return taxData;
+};
+
+const lookupParcel = () => {
+  parcel = document.getElementById("parcel-number").value;
+
+  disableSearch();
+  showLoadingPopup();
+
+  setTaxData()
+    .then((data) => {
+      if (Array.isArray(data)) {
+        parcelData =
+          data.find((obj) => obj["txre_parcel_id"] == parcel) || null;
+
+        setTimeout(() => {
+          console.log(parcelData);
+          enableSearch();
+          hideLoadingPopup();
+        }, 1000);
+
+        return parcelData;
+      }
+    })
+    .then((data) => {
+      tax24.textContent = data["2024_Total_Net"];
+      tax25.textContent = data["2025_Total_Net"];
+      taxDifference.textContent = data["net_difference"];
+      schoolChange.textContent = data["school_change"];
+      countyChange.textContent = data["county_change"];
+      otherCharges.textContent = data["other_charges"];
+      cumulativeChange.textContent = data["combined_change"];
+      reassessmentImpact.textContent = data["reassessment_impact"];
+      reassessmentApprox.textContent = data["reassessment_approx"];
+      taxRateApprox.textContent = data["tax_rate_approx"];
+      taxRateImpact.textContent = data["rate_impact"];
+      combinedChange.textContent = data["combined_change"];
+    })
+    .catch((err) => {
+      showLookupError();
+      console.log("Problem retrieving parcel" + err);
+    });
+};
+
+const disableSearch = () => {
+  lookupButton.textContent = "Loading...";
+  lookupButton.disabled = true;
+};
+
+const enableSearch = () => {
+  lookupButton.textContent = "Lookup";
+  lookupButton.disabled = false;
+};
+
+// Function to show the loading popup
+const showLoadingPopup = () => {
+  document.getElementById("loadingOverlay").style.display = "flex";
+};
+
+// Function to hide the loading popup
+const hideLoadingPopup = () => {
+  document.getElementById("loadingOverlay").style.display = "none";
+};
+
+const showLookupError = () => {
+  document.getElementById("lookup-error").classList.add("showError");
+
+  setTimeout(() => {
+    hideLookupError();
+  }, 3000);
+};
+
+const hideLookupError = () => {
+  document.getElementById("lookup-error").classList.remove("showError");
+};
+
+/*jshint esversion: 6 */
+
+var slideVehicle1 = document.querySelector("#spotlight_slideshow.slideVehicle");
+var slides1 = slideVehicle1.querySelectorAll(".entryslide.slideItem");
+var firstSlide1 = slides1[0];
+var lastSlide1 = slides1[slides1.length-1];
+var slideWidth1 = 235;
+var translationAmount1, slideVehicleSize1, currentSlideList1, slideIndex1, slideDuration1, firstSlideIndex1, lastSlideIndex1, firstSlidePosition1, lastSlidePosition1, increment1 = 0;
+
+
+
+
+
+// Generating arrows.
+var anewNode = document.createElement("div");
+var anewNode2 = document.createElement("div");
+
+anewNode.classList.add('arrow');
+anewNode.classList.add('prev');
+anewNode2.classList.add('arrow');
+anewNode2.classList.add('next');
+slideVehicle1.insertAdjacentElement('beforebegin', anewNode);
+slideVehicle1.insertAdjacentElement('beforebegin', anewNode2);
+
+var nextButton1 = document.querySelector("#spotlight .arrow.next");
+var prevButton1 = document.querySelector("#spotlight .arrow.prev");
+
+
+
+
+
+// Place an empty copy of the last slide before the first.
+lastSlide1 = lastSlide1.cloneNode(true);
+
+// empty(lastSlide.querySelector("ul"));
+slideVehicle1.insertBefore(lastSlide1, firstSlide1);
+
+// Place an empty copy of the first slide after the last. 
+firstSlide1 = firstSlide1.cloneNode(true);
+
+// empty(firstSlide.querySelector("ul"));
+slideVehicle1.appendChild(firstSlide1);
+
+// Calculate slideVehicle translation amount.
+translationAmount1 = reduceDecimal1(100/(slides1.length + 2));
+firstSlidePosition1 = firstSlideIndex1 = 0;
+lastSlidePosition1 = translationAmount1 * (slideVehicle1.childElementCount - 1);
+lastSlideIndex1 = (slideVehicle1.childElementCount - 2);
+
+
+
+
+
+
+
+
+
+
+function init1() {
+	increment1 -= translationAmount1;
+	slideIndex1 = 0;
+
+	toggleActiveState1(slides1[slideIndex1]);
+	setTranslation1(increment1);
+	enableArrowButtons1();
+}
+
+function nextSlide1() {
+	increment1 -= translationAmount1;
+	slideIndex1++;
+
+	setTranslation1(increment1);
+	checkSlidePosition1();
+}
+
+function previousSlide1() {
+	increment1 += translationAmount1;
+	slideIndex1--;
+
+	setTranslation1(increment1);
+	checkSlidePosition1();
+}
+
+function autoNext1(slide) {
+	currentSlideList1 = slide.querySelector("ul");
+
+	// Code for Chrome, Safari and Opera
+	currentSlideList1.addEventListener("webkitAnimationEnd", nextSlide1);
+
+	// Standard syntax
+	currentSlideList1.addEventListener("animationend", nextSlide1);
+
+	setSlideDuration1(currentSlideList1);
+	console.log("auto slide");
+}
+
+function checkSlidePosition1() {
+	if (slideIndex1 < firstSlideIndex1) {
+		increment1 = (-1 * (lastSlidePosition1 - translationAmount1));
+		slideIndex1 = slides1.length-1;
+
+		pauseArrowButtons1();
+		resetSlideShowMechanisms1();
+	}
+	else if (slideIndex1 === lastSlideIndex1) {
+		increment1 = (-1 * (firstSlidePosition1 + translationAmount1));
+		slideIndex1 = 0;
+
+		pauseArrowButtons1();
+		resetSlideShowMechanisms1();
+	}
+
+	toggleActiveState1(slides1[slideIndex1]);
+	console.log("Current slide: " + slideIndex1);
+}
+
+function pauseArrowButtons1() {
+	nextButton1.removeEventListener('click', nextSlide1);
+	prevButton1.removeEventListener('click', previousSlide1);
+}
+
+function resetSlideShowMechanisms1() {
+	setTimeout(function() {
+		pauseTransitions1();
+		setTranslation1(increment1);
+
+		setTimeout(function() {
+			console.log("arrows enabled");
+			setTransitions1('0.5s');
+			enableArrowButtons1();
+		}, 500);
+	}, 1000);
+}
+
+function pauseTransitions1() {
+	slideVehicle1.style.transition = '0s';
+}
+
+function setTranslation1(amount) {
+	slideVehicle1.style.transform = "translateX("+amount+"%)";
+}
+
+function setTransitions1(amount) {
+	slideVehicle1.style.transition = amount;
+}
+
+function setWidthIE1() {
+	var ua, msie;
+
+	// If Internet Explorer, then...
+	ua = window.navigator.userAgent;
+	msie = ua.indexOf("MSIE ");
+	// ..alter the css of the following elements.
+	if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+		slideVehicleSize1 = slideVehicle1.childElementCount * slideWidth1;
+		slideVehicle1.style.width = slideVehicleSize1 + "px";
+
+		console.log("slide width: " + slideWidth1);
+		console.log("vehicle size: " + slideVehicleSize1);
+	}
+}
+
+function setSlideDuration1(slideList) {
+	slideDuration1 = (slideList.offsetHeight/28) + 's';
+
+
+	// Internet Explorer work around.
+	// Setting the slide duration through js doesn't work right away. 
+	// The code below removes and reapplies the animation css
+	// with the updated duration.
+	if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+		slideList.parentNode.classList.remove('active');
+		
+		setTimeout(function() {
+			slideList.parentNode.classList.add('active');
+			slideList.style.animationDuration = slideDuration1;
+		}, 100);
+	}
+	else {
+		slideList.style.animationDuration = slideDuration1;
+	}
+	
+}
+
+function enableArrowButtons1() {
+	nextButton1.addEventListener('click', nextSlide1);
+	prevButton1.addEventListener('click', previousSlide1);
+}
+
+function toggleActiveState1(slide) {
+	for (var i = 0; i < slides1.length; i++) {
+		slides1[i].classList.remove('active');
+	}
+
+	slide.classList.toggle('active');
+	//autoNext(slide);
+}
+
+function empty1(element) {
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
+	}
+}
+
+function reduceDecimal1(value) {
+	value = (Math.round(value * 100) / 100).toFixed(2);
+
+	return parseFloat(value);
+}
+
+// Initialize slideshow
+setWidthIE1();
+init1();
